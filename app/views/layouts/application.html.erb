@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CD</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=hoAJkV1ejgYLcx1aMVWu&submodules=geocoder"></script>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
