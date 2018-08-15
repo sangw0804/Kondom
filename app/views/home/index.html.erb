@@ -1,17 +1,29 @@
-<div id="modal" class="modal-hide">
-    <h2>title</h2>
-    <h3>type</h3>
-    <ul>
-        <li>콘돔들</li>
-        <li>콘돔들</li>
-        <li>콘돔들</li>
-    </ul>
+<div id="modal" class="modal modal-hide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>title</h5>
+            </div>
+            <div class="modal-body">
+                <h6>type</h6>
+                <ul>
+                    <li>콘돔들</li>
+                    <li>콘돔들</li>
+                    <li>콘돔들</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="map">
-    <button id="presentLocBtn">현재 위치로</button>
-
-    <input id="searchBox" />
+<div id="map" style="height: 100vh;">
+    <div class="input-group" id="search">
+        <input id="searchBox" class="form-control" placeholder="검색해주세요." />
+        <div class="input-group-append">
+            <button id="searchbtn" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            <button id="presentLocBtn" class="btn btn-warning"><i class="fas fa-location-arrow"></i></button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -80,8 +92,8 @@
                 const markerClickHandler = (index, event) => {
                     // 실제로는 이곳에 클릭 시 로직을 작성해주어야 함.
                     console.log(markers[index]);
-                    $("#modal h2").text(markers[index].title);
-                    $("#modal h3").text(markers[index].type);
+                    $("#modal h5").html(markers[index].title);
+                    $("#modal h6").html(markers[index].type.toUpperCase());
                     $("#modal").attr("class", "modal-show");
                 }
 
