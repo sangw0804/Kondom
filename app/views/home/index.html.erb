@@ -41,75 +41,86 @@
     });
 
     // 검색하면 검색위치로 setCenter & 키워드 사용 근처 콘돔판매점 검색해 json 리턴
+    // 엔터
     $("#searchBox").keydown((event) => {
         if(event.keyCode === 13) {
-            // 기존의 마커들을 모두 해제
-            markers.forEach(mk => {
-                mk.setMap(null);
-            });
-            markers = [];
-
-            // home controller로 ajax 요청
-            let encodedQuery = encodeURI(event.target.value);
-            console.log(encodedQuery);
-            axios("/search/"+encodedQuery+".json").then(({ data }) => {
-                console.log(data);
-                let searchedLatLng = naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(data["current"].mapx, data["current"].mapy));
-                let marker = new naver.maps.Marker({
-                    map: map,
-                    position: searchedLatLng,
-                    title: "현재 위치",
-                    zIndes: 100
-                })
-                markers.push(marker);
-                map.setCenter(searchedLatLng);
-                
-                //마커생성
-                for(let key of Object.keys(data)) {
-                    if(key === "current") {
-                        continue;
-                    }
-                    data[key].forEach(datum => {
-                        // console.log(datum);
-                        let marker = new naver.maps.Marker({
-                            map: map,
-                            position: naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(datum.mapx, datum.mapy)),
-                            title: datum.title,
-                            // icon: {key값마다 다른 아이콘 설정 필요},
-                            zIndex: 100
-                        });
-                        marker.type = key;
-                        markers.push(marker);
-                    });
-                }
-
-                // markers 배열에 있는 마커들 활성화
-                markers.forEach(mk => {
-                    mk.setMap(map);
-                });
-
-                // 각각의 마커인덱스를 받아 클릭시 콘솔에 해당마커를 띄워줌
-                const markerClickHandler = (index, event) => {
-                    // 실제로는 이곳에 클릭 시 로직을 작성해주어야 함.
-                    console.log(markers[index]);
-                    $("#modal h5").html(markers[index].title);
-                    $("#modal h6").html(markers[index].type.toUpperCase());
-                    $("#modal").attr("class", "modal-show");
-                }
-
-                // 현재 markers배열에 존재하는 모든 마커들을 순회하면서 클릭 핸들러를 달아줌. 이때 해당 마커의 인덱스를 bind로 묶어준다.
-                markers.forEach((mk, index) => {
-                    naver.maps.Event.addListener(mk,'click', markerClickHandler.bind(this, index));
-                })
-
-                naver.maps.Event.addListener(map, "click", (event) => {
-                    if($("#modal").attr("class") === "modal-show") {
-                        $("#modal").attr("class", "modal-hide");
-                    }
-                });
-            }).catch(err => {
-                console.log(err);
-            })
+            searching();
         }
     })
+
+    // searchbtn 입력
+    $("#searchbtn").click((event) => {
+        searching();
+    })
+
+    const searching = () => {
+        // 기존의 마커들을 모두 해제
+        markers.forEach(mk => {
+            mk.setMap(null);
+        });
+        markers = [];
+
+        // home controller로 ajax 요청
+        let encodedQuery = encodeURI($("#searchBox").val());
+        console.log(encodedQuery);
+        axios("/search/"+encodedQuery+".json").then(({ data }) => {
+            console.log(data);
+            let searchedLatLng = naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(data["current"].mapx, data["current"].mapy));
+            let marker = new naver.maps.Marker({
+                map: map,
+                position: searchedLatLng,
+                title: "현재 위치",
+                zIndes: 100
+            })
+            markers.push(marker);
+            map.setCenter(searchedLatLng);
+            
+            //마커생성
+            for(let key of Object.keys(data)) {
+                if(key === "current") {
+                    continue;
+                }
+                data[key].forEach(datum => {
+                    // console.log(datum);
+                    let marker = new naver.maps.Marker({
+                        map: map,
+                        position: naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(datum.mapx, datum.mapy)),
+                        title: datum.title,
+                        // icon: {key값마다 다른 아이콘 설정 필요},
+                        zIndex: 100
+                    });
+                    marker.type = key;
+                    markers.push(marker);
+                });
+            }
+
+            // markers 배열에 있는 마커들 활성화
+            markers.forEach(mk => {
+                mk.setMap(map);
+            });
+
+            // 각각의 마커인덱스를 받아 클릭시 콘솔에 해당마커를 띄워줌
+            const markerClickHandler = (index, event) => {
+                // 실제로는 이곳에 클릭 시 로직을 작성해주어야 함.
+                console.log(markers[index]);
+                $("#modal h5").html(markers[index].title);
+                $("#modal h6").html(markers[index].type.toUpperCase());
+                $("#modal").attr("class", "modal-show");
+            }
+
+            // 현재 markers배열에 존재하는 모든 마커들을 순회하면서 클릭 핸들러를 달아줌. 이때 해당 마커의 인덱스를 bind로 묶어준다.
+            markers.forEach((mk, index) => {
+                naver.maps.Event.addListener(mk,'click', markerClickHandler.bind(this, index));
+            })
+
+            // 맵에 클릭하면 모달이 show 인경우 hide로 바꿔주는 이벤트 핸들러를 달아준다.
+            naver.maps.Event.addListener(map, "click", (event) => {
+                if($("#modal").attr("class") === "modal-show") {
+                    $("#modal").attr("class", "modal-hide");
+                }
+            });
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 </script>
