@@ -9,16 +9,24 @@ class HomeController < ApplicationController
   def index
   end
 
-  def search
+  def search_around
+    results = get_infos(params[:search])
+    respond_to do |format|
+      format.json {
+        render json: results
+      }
+    end
+  end
+
+  def search_center
     encoded = CGI::escape(params[:search])
     data = JSON.load(open("https://openapi.naver.com/v1/search/local.json?query=#{encoded}&start=1&display=1",
     "X-Naver-Client-Secret" => "NteRqJBSgR",
     "X-Naver-Client-Id" => "hoAJkV1ejgYLcx1aMVWu"))
-    results = get_infos(params[:search])
-    results["current"] = data["items"][0]
+    
     respond_to do |format|
       format.json {
-        render json: results
+        render json: data["items"][0]
       }
     end
   end
