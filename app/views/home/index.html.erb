@@ -35,7 +35,20 @@
     $("#presentLocBtn").click((event) => {
         $(event.target).attr("disabled", true);
         navigator.geolocation.getCurrentPosition(({ coords }) => {
-            map.setCenter(new naver.maps.LatLng(coords.latitude, coords.longitude ));
+            let center = new naver.maps.LatLng(coords.latitude, coords.longitude )
+            let marker = new naver.maps.Marker({
+                map: map,
+                position: center,
+                title: "현재 위치",
+                zIndes: 100,
+                animation: naver.maps.Animation.BOUNCE
+            });
+            markers.push(marker);
+            markers.forEach(mk => {
+                mk.setMap(map);
+            });
+
+            map.setCenter(center);
             $(event.target).removeAttr("disabled");
         });
     });
@@ -48,7 +61,7 @@
         }
     })
 
-    // searchbtn 입력
+    // searchbtn 클릭
     $("#searchbtn").click((event) => {
         searching();
     })
@@ -65,17 +78,20 @@
         console.log(encodedQuery);
         axios("/search/"+encodedQuery+".json").then(({ data }) => {
             console.log(data);
-            let searchedLatLng = naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(data["current"].mapx, data["current"].mapy));
+            let searchedLatLng = fromKatecToLatLng(data["current"].mapx, data["current"].mapy);
             let marker = new naver.maps.Marker({
                 map: map,
                 position: searchedLatLng,
                 title: "현재 위치",
-                zIndes: 100
+                zIndes: 100,
+                animation: naver.maps.Animation.BOUNCE
             })
             markers.push(marker);
             map.setCenter(searchedLatLng);
+
+            // 
             
-            //마커생성
+            // 마커생성
             for(let key of Object.keys(data)) {
                 if(key === "current") {
                     continue;
@@ -84,7 +100,7 @@
                     // console.log(datum);
                     let marker = new naver.maps.Marker({
                         map: map,
-                        position: naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(datum.mapx, datum.mapy)),
+                        position: fromKatecToLatLng(datum.mapx, datum.mapy),
                         title: datum.title,
                         // icon: {key값마다 다른 아이콘 설정 필요},
                         zIndex: 100
@@ -122,5 +138,10 @@
         }).catch(err => {
             console.log(err);
         })
+    }
+
+    // 카텍 좌표를 위경도 좌표로 변환하는 함수
+    const fromKatecToLatLng = (katecX, katecY) => {
+        return naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(katecX, katecY));
     }
 </script>

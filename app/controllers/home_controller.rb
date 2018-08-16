@@ -28,7 +28,7 @@ class HomeController < ApplicationController
     keywords = ["gs25","cu","미니스톱","세븐일레븐","올리브영","약국","성인용품","왓슨스","롭스"]
     results = {}
     keywords.each do |keyword|
-      encodedQuery = CGI::escape(query + " " + keyword)
+      encodedQuery = CGI::escape(query + " 근처 " + keyword)
       data = JSON.load(open("https://openapi.naver.com/v1/search/local.json?query=#{encodedQuery}&start=1&display=50",
       "X-Naver-Client-Secret" => "NteRqJBSgR",
       "X-Naver-Client-Id" => "hoAJkV1ejgYLcx1aMVWu"))["items"]
