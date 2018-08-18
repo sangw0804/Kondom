@@ -52,7 +52,7 @@ html, body {
 
 #modal {
     transition: opacity .3s ease-out;
-    position: fixed;
+    position: absolute;
     left: 5%;
     top: 30%;
     width: 90%;
@@ -62,8 +62,10 @@ html, body {
 
 .modal-show {
     opacity: 1;
+    transform: translate(0px);
 }
 
 .modal-hide {
     opacity: 0;
+    transform: translate(-2000px);
 }
