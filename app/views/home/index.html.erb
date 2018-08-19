@@ -1,16 +1,28 @@
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
+
 <div id="modal" class="modal modal-hide">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header justify-content-center">
                 <h5>title</h5>
             </div>
-            <div class="modal-body">
-                <h6>type</h6>
-                <ul>
-                    <li>콘돔들</li>
-                    <li>콘돔들</li>
-                    <li>콘돔들</li>
-                </ul>
+            <div class="modal-body" style="height: 470px;">
+                <%# <h6>type</h6> %>
+                <p class="text-right"><span class="badge badge-primary">call</span>000-0000</p>
+                <div id="container">
+                <% 4.times do %>
+                <div class="d-flex box mb-3">
+                    <div class="box-img border rounded ml-1">image</div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <ul style="list-style: none;">
+                            <li>name</li>
+                            <li>price</li>
+                            <li><span class="review--point">★★★★★</span> 4.9</li>
+                        </ul>
+                    </div>
+                </div>
+                <% end %>
+                </div>
             </div>
         </div>
     </div>
@@ -164,4 +176,8 @@
         map.setCenter(searchedLatLng);
     }
 
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> 388af6b33a45d5b131d8f62b7f653b350842118a

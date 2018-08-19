@@ -16,4 +16,9 @@
 //= require_tree .
 //= require jquery
 //= require jquery_ujs
+<<<<<<< HEAD
 //= require axios
+
+=======
+//= require axios
+>>>>>>> 388af6b33a45d5b131d8f62b7f653b350842118a
