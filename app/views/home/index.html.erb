@@ -51,7 +51,7 @@
                 if(status === naver.maps.Service.Status.ERROR) return alert("현재위치 좌표값을 주소로 변환하는 요청이 실패했습니다!");
 
                 const {dongmyun , sigugun} = result.items[1].addrdetail;
-                searchingAround(dongmyun+" "+sigugun);
+                searchingAround(sigugun+" "+dongmyun);
             });
             setCenterWithMarker(null, null, center);
 
@@ -88,18 +88,21 @@
         // home controller로 ajax 요청
         let encodedQuery = encodeURI(searchQuery);
         axios("/search-around/"+encodedQuery+".json").then(({ data }) => {
-
+            console.log(data);
             // 마커생성
             for(let key of Object.keys(data)) {
-                data[key].forEach(datum => {
+                data[key].list.forEach(datum => {
                     let marker = new naver.maps.Marker({
                         map: map,
                         position: fromKatecToLatLng(datum.mapx, datum.mapy),
                         title: datum.title,
-                        // icon: {key값마다 다른 아이콘 설정 필요},
+                        // icon: {
+                        //     url: "<%= asset_path('KakaoTalk_Photo_2018-08-19-17-49-49') %>"
+                        // },
                         zIndex: 100
                     });
                     marker.type = key;
+                    marker.condoms = data[key].condoms;
                     markers.push(marker);
                 });
             }
