@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  score: 1
+  condom: one
+
+two:
+  content: MyText
+  score: 1
+  condom: two

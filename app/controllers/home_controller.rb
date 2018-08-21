@@ -60,7 +60,7 @@ class HomeController < ApplicationController
       else
         results[keyword]["condoms"] = Condom.where({store: "drug"}).as_json.shuffle
         t = Time.new
-        if t.wday >= 1 and t.wday <=5
+        if t.wday >= 1 and t.wday <= 5
           results[keyword]["time"] = "10:00 ~ 20:00"
         else
           results[keyword]["time"] = "휴무"

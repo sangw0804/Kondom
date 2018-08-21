@@ -31,7 +31,26 @@
 <button id="categorybtn" class="btn btn-warning"><i class="fas fa-location-arrow"></i></button>
 
 <div class="category1">
-<h2>hello</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="card bg-dark text-white" style="width: 20vh">
+            <img class="card-img" src="http://n19.kr/web/product/big/201711/697_shop1_963884.png" alt="Card image">
+            <div class="card-img-overlay">
+                <h8 class="card-title">#오카모토 003</h8>
+                <p class="card-text"></p>
+            </div>
+        </div>
+        <div class="card bg-dark text-white" style="width: 20vh">
+            <img class="card-img" src="http://n19.kr/web/product/big/201711/697_shop1_963884.png" alt="Card image">
+            <div class="card-img-overlay">
+                <h5 class="card-title">#오카모토 003</h5>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 
 <script>
@@ -50,15 +69,18 @@
     
     
     // 로직 ===============================================================================
-    // 현재위치 버튼 로직
     
-
+    // 토글 로직
     $("#categorybtn").click(() => {
         $('.category1').toggleClass('categoryshow')   
     });
     
     // toggleClass('category2')
-    // css('transform', 'translate(0, -100%)')   
+    // css('transform', 'translate(0, -100%)') 
+    
+    
+    // 현재위치 버튼 로직
+     
 
     
     
@@ -116,13 +138,16 @@
             // 마커생성
             for(let key of Object.keys(data)) {
                 data[key].list.forEach(datum => {
+                    let iconUrl = "";
+                    switch (key) {
+                        case "약국": iconUrl = '<%= asset_path('icons/drug.png')%>'; break;
+                        default: iconUrl = '<%= asset_path('icons/mart.png')%>'; break;
+                    }
                     let marker = new naver.maps.Marker({
                         map: map,
                         position: fromKatecToLatLng(datum.mapx, datum.mapy),
                         title: datum.title,
-                        // icon: {
-                        //     url: "<%= asset_path('KakaoTalk_Photo_2018-08-19-17-49-49') %>"
-                        // },
+                        icon: iconUrl,
                         zIndex: 100
                     });
                     marker.type = key;
@@ -146,8 +171,6 @@
     const searchingCenter = (searchQuery) => {
         let encodedQuery = encodeURI(searchQuery);
         axios("/search-center/" + encodedQuery +".json").then(({data}) => {
-
-
             setCenterWithMarker(data.mapx, data.mapy);
         }).catch(err => {
             console.log(err);
@@ -217,19 +240,19 @@
             fillOpacity: 0.05
         });
         
-
-        
-
         let marker = new naver.maps.Marker({
             map: map,
             position: searchedLatLng,
             title: "현재 위치",
-            zIndes: 100,
+            icon: {
+                url:'<%= asset_path('elephant.png')%>'
+            },
+            zIndex: 101,
             animation: naver.maps.Animation.BOUNCE
         })
         markers.push(marker);
         map.setCenter(searchedLatLng);
-        map.setZoom(12, true)
+        map.setZoom(13, true);
     }
 
     // 이것은 리액트가 아니다.
