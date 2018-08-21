@@ -30,7 +30,7 @@
 
 <button id="categorybtn" class="btn btn-danger"><i class="fas fa-plus"></i></button>
 
-<%= render 'category' %>
+<%= render 'category', condoms: @condoms %>
 
 <script>
     //// 전역변수들 ========================================================================
@@ -68,8 +68,9 @@
                 if(status === naver.maps.Service.Status.ERROR) return alert("현재위치 좌표값을 주소로 변환하는 요청이 실패했습니다!");
                 console.log(result.items);
                 const {dongmyun , sigugun} = result.items[1].addrdetail;
-                searchingAround(sigugun+" "+dongmyun);
-                setCenterWithMarker(null, null, center);
+                searchingAround(sigugun+" "+dongmyun).then(() => {
+                    setCenterWithMarker(null, null, center);
+                });
             });
 
             $(event.target).removeAttr("disabled");
@@ -157,7 +158,7 @@
     
     // 마커를 클릭하면 모달을 show 상태로 만든다.
     const markerClickHandler = (index, event) => {
-        console.log(markers[index]);
+        console.log(markers[index].position);
         $("#modal h5").html(markers[index].title);
         $("#modal h6").html(markers[index].type.toUpperCase());
         $("#modal .tel").text(markers[index].tel);
@@ -184,6 +185,7 @@
             searchedLatLng = fromKatecToLatLng(katecX, katecY);
         }
         circles.forEach(circle => {circle.setMap(null)});  // 기존의 원 레이어 제거
+        circles = [];
 
         circles.push(new naver.maps.Circle({
             map: map,
@@ -213,12 +215,12 @@
             fillColor: 'red',
             fillOpacity: 0.05
         }));
+        let centerIcon = '<%= asset_path('sad_elephant.png')%>';
 
         let yellowCircleBound = circles[1].getBounds();
-        let centerIcon = '<%= asset_path('elephant.png')%>';
         markers.forEach(marker => {
             if(yellowCircleBound.hasLatLng(marker.position)) {
-                centerIcon = '<%= asset_path('sad_elephant.png')%>';
+                centerIcon = '<%= asset_path('elephant.png')%>';
             }
         });
         
