@@ -32,6 +32,14 @@ class HomeController < ApplicationController
     end
   end
 
+  def hot
+    
+  end
+
+  def rating
+
+  end
+  
   private
    def get_infos(query)
     keywords = ["gs25","cu","미니스톱","세븐일레븐","올리브영","약국","성인용품","왓슨스","롭스"]
