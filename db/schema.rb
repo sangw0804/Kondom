@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_19_090508) do
+ActiveRecord::Schema.define(version: 2018_08_21_084347) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.integer "score"
+    t.integer "condom_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condom_id"], name: "index_comments_on_condom_id"
+  end
 
   create_table "condoms", force: :cascade do |t|
     t.string "name"
