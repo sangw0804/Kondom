@@ -14,12 +14,11 @@
           </div>
         </div>
       </div>
-      <% 10.times do %>
-
+      <% @condoms.each do |condom| %>
         <div class="col-6 card-white" style="width: 18rem;">
-          <img class="card-img-top" src="http://n19.kr/web/product/big/201711/697_shop1_963884.png" alt="Card image cap">
+          <%=image_tag condom.image, class:"card-img-top"  %>
           <div class="card-body" style="padding: 0px" >
-            <p class="card-text" style="margin-bottom : 0px; font-size: 0.8rem">#오카모토 003</p>
+            <p class="card-text" style="margin-bottom : 0px; font-size: 0.8rem"><%= condom.name %></p>
             <p class="card-text" style="color: orange; font-size: 1rem"> <%= '★' * rand(2...5) %>            
           </div>
         </div>
