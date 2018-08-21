@@ -1,0 +1,2 @@
+class Condom < ApplicationRecord
+end
