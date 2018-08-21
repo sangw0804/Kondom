@@ -1,3 +1,5 @@
+
+
 <div class="d-flex flex-column justify-content-center align-items-center">
     <div class="bg-warning text-white w-100" style="height=70px;"><h3 class="text-center mt-1">뿌-우</h3></div>
     <div class="hot-img border rounded mt-4">image</div>
@@ -9,23 +11,102 @@
     <div class="ml-2 mr-2">
         <h4 class="review--title mb-3">NAME의 리뷰</h4>
         <div class="border-bottom mb-2">
-            <h6 class="text-left">1 좋으네요</h6>
+          <% @comments.each do |c|%>
+            <h6 class="text-left"><span class="badge badge-pill badge-dark"><%= c.id %></span><%= c.content%></h6>
             <span class="review--point">★★★★</span>
+          <% end %>
         </div>
-        <div class="border-bottom mb-2">
-            <h6 class="text-left">2 별로</h6>
-            <span class="review--point">★★</span>
+        <div class="review__form">
+            <%= form_for @comment, url: {controller: :home, action: :rating} do |f| %>
+              <%= label_tag :score, "별점 주기", class: "field__label"%>
+              <div class="field field--starpoint">
+               <%= f.radio_button :score, 1, checked: true, id: "point--1", class: "field__radio--button"%>
+                 <span class="field__radio--point staron" value="1">★</span>
+               <%= f.radio_button :score, 2, id: "point--2", class: "field__radio--button"%>
+                 <span class="field__radio--point " value="2">★</span>
+               <%= f.radio_button :score, 3, id: "point--3", class: "field__radio--button"%>
+                 <span class="field__radio--point" value="3">★</span>
+               <%= f.radio_button :score, 4, id: "point--4", class: "field__radio--button"%>
+                 <span class="field__radio--point " value="4">★</span>
+               <%= f.radio_button :score, 5, id: "point--5", class: "field__radio--button"%>
+                 <span class="field__radio--point " value="5">★</span>
+              </div>
+             <%= label_tag :content, "리뷰 작성", class: "field__content field__label" %>
+             <%= f.text_area :content %>
+             <%= f.submit "댓글쓰기" %>
+            <% end %>
         </div>
-        <div class="border-bottom mb-2">
-            <h6 class="text-left">3 굳굳</h6>
-            <span class="review--point">★★★★</span>
-        </div>
-    <div class="review__form">
-        <form accept-charset="UTF-8" action="/" method="post">
-            <div class="review--point">★★★★★</div>
-            <input type="text" name="review[content]" id="content" />
-            <input type="submit" name="commit" value="Create"/>
-        </form>
-    </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $("#review_submit").on("click", function(){
+     $("#review_content").val("");
+  
+     var p = "★"
+     if ($("#point").val() == 1){
+       p = "★"
+     }
+     else if ($("#point").val() == 2){
+       p = "★★"
+     }
+     else if ($("#point").val() == 3){
+       p = "★★★"
+     }
+     else if ($("#point").val() == 4){
+       p = "★★★★"
+     }
+     else{
+       p = "★★★★★"
+     }
+  
+     $(".newreview").append("<div class='review__contanier'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
+     new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p +"<p class='review--content'>"+ $("#content").val() +"</h1>"+
+     "</span></span></p>"+"<p class='review--user'>"+ "pkch93" +"</p>");
+    });
+  
+    $('.field--starpoint span').click(function(){
+     $(this).parent().children('span').removeClass('staron');
+     $(this).addClass('staron').prevAll('span').addClass('staron');
+     var x = $(this).attr('value')
+     $("#point").val(x);
+     $("#star_point").text(x+"점");
+     return false;
+    });
+  </script>
+  
+
+<script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        $( ".star_rating a" ).click(function() {
+            $(this).parent().children("a").removeClass("on");
+            $(this).addClass("on").prevAll("a").addClass("on");
+            return false;
+        });
+        
+        $("#menuButton1").click(function() {
+            $(".dropdown-menu1").toggle();
+        });
+
+        $("#menuButton2").click(function() {
+            $(".dropdown-menu2").toggle("slow");
+        });
+
+        $("#menuButton3").click(function() {
+            $(".dropdown-menu3").toggle("slow");
+        });
+</script>

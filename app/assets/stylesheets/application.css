@@ -123,3 +123,35 @@ html, body {
     width: 200px;
     height: 200px;
 }
+
+.star_rating {font-size:0; letter-spacing:-4px;}
+.star_rating a {
+  font-size:40px;
+  letter-spacing:0;
+  display:inline-block;
+  margin-left:5px;
+  color:#ccc;
+  text-decoration:none;
+}
+.star_rating a:first-child {margin-left:0;}
+.star_rating a.on {color:orange !important;}
+
+#myBtn {
+    /*display: none;*/ /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: orange; /* Set a background color */
+    color: black; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 20px; /* Rounded corners */
+    font-size: 14px; /* Increase font size */
+  }
+  
+  #myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+  }

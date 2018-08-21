@@ -8,6 +8,7 @@ class HomeController < ApplicationController
   end
 
   def index
+    
   end
 
   def search_around
@@ -33,11 +34,13 @@ class HomeController < ApplicationController
   end
 
   def hot
-    
+    @comments = Comment.all
+    @comment = Comment.new
   end
 
   def rating
-
+    @comment = Comment.new(params.require(:comment).permit(:score, :content, :condom_id))
+    @comment.save
   end
   
   private
