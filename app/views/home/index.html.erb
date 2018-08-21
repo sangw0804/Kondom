@@ -8,20 +8,10 @@
             </div>
             <div class="modal-body" style="height: 470px;">
                 <%# <h6>type</h6> %>
-                <p class="text-right"><span class="badge badge-primary">call</span>000-0000</p>
+                <p class="text-right" style="margin-bottom: 2px">영업시간 : <span class="time"></span></p>
+                <p class="text-right"><span class="badge badge-primary">call</span><span class="tel"></span></p>
                 <div id="container">
-                <% 4.times do %>
-                <div class="d-flex box mb-3">
-                    <div class="box-img border rounded ml-1">image</div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <ul style="list-style: none;">
-                            <li>name</li>
-                            <li>price</li>
-                            <li><span class="review--point">★★★★★</span> 4.9</li>
-                        </ul>
-                    </div>
-                </div>
-                <% end %>
+
                 </div>
             </div>
         </div>
@@ -44,7 +34,8 @@
     let map = new naver.maps.Map(mapDiv, {
         logoControl: false,
         mapDataControl: false,
-        zoom:13
+        zoom:13,
+        minZoom: 8
     });
     let markers = []; // 마커들의 배열
 
@@ -61,7 +52,7 @@
                 location: center, coordType: naver.maps.Service.CoordType.LatLng
             },(status, {result}) => {
                 if(status === naver.maps.Service.Status.ERROR) return alert("현재위치 좌표값을 주소로 변환하는 요청이 실패했습니다!");
-
+                console.log(result.items);
                 const {dongmyun , sigugun} = result.items[1].addrdetail;
                 searchingAround(sigugun+" "+dongmyun);
             });
@@ -115,6 +106,8 @@
                     });
                     marker.type = key;
                     marker.condoms = data[key].condoms;
+                    marker.tel = datum.telephone;
+                    marker.time = data[key].time;
                     markers.push(marker);
                 });
             }
@@ -148,6 +141,12 @@
         console.log(markers[index]);
         $("#modal h5").html(markers[index].title);
         $("#modal h6").html(markers[index].type.toUpperCase());
+        $("#modal .tel").text(markers[index].tel);
+        $("#modal .time").text(markers[index].time);
+        $("#modal #container").empty();
+        markers[index].condoms.forEach((condom) => {
+            $("#modal #container").append($.parseHTML(getHtmlList(condom)));
+        });
         $("#modal").attr("class", "modal-show");
     }
 
@@ -176,8 +175,21 @@
         map.setCenter(searchedLatLng);
     }
 
-<<<<<<< HEAD
+    // 이것은 리액트가 아니다.
+    const getHtmlList = (condom) => {
+        const ct = {normal: "일반형", slim: "초박형", dot: "돌기형",drug: "도포형"}
+
+        return `<div class="d-flex box mb-3">
+                    <div class="box-img border rounded ml-1"><img height="120" width="120" src="/assets${condom.image}" /></div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <ul style="list-style: none;">
+                            <li>${condom.name}</li>
+                            <li>${condom.price} 원</li>
+                            <li>${ct[condom.conType]}</li>
+                            <li><span class="review--point">★★★★★</span> 4.9</li>
+                        </ul>
+                    </div>
+                </div>`;
+    }
+
 </script>
-=======
-</script>
->>>>>>> 388af6b33a45d5b131d8f62b7f653b350842118a
