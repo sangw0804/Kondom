@@ -115,7 +115,7 @@
                     let iconUrl = "";
                     switch (key) {
                         case "약국": iconUrl = '<%= asset_path('icons/drug.png')%>'; break;
-                        default: iconUrl = '<%= asset_path('icons/mart.png')%>'; break;
+                        default: iconUrl = '<%= asset_path('icons/conven.png')%>'; break;
                     }
                     let marker = new naver.maps.Marker({
                         map: map,
@@ -125,6 +125,7 @@
                         zIndex: 100
                     });
                     marker.type = key;
+                    marker.open = data[key].open;
                     marker.condoms = data[key].condoms;
                     marker.tel = datum.telephone;
                     marker.time = data[key].time;
@@ -158,11 +159,15 @@
     
     // 마커를 클릭하면 모달을 show 상태로 만든다.
     const markerClickHandler = (index, event) => {
-        console.log(markers[index].position);
+        $("#modal .time").removeAttr("style");
+        console.log(markers[index]);
         $("#modal h5").html(markers[index].title);
         $("#modal h6").html(markers[index].type.toUpperCase());
         $("#modal .tel").text(markers[index].tel);
         $("#modal .time").text(markers[index].time);
+        if(!markers[index].open) {
+            $("#modal .time").attr("style", "text-decoration: line-through");
+        }
         $("#modal #container").empty();
         markers[index].condoms.forEach((condom) => {
             $("#modal #container").append($.parseHTML(getHtmlList(condom)));
@@ -219,7 +224,7 @@
 
         let yellowCircleBound = circles[1].getBounds();
         markers.forEach(marker => {
-            if(yellowCircleBound.hasLatLng(marker.position)) {
+            if(marker.open && yellowCircleBound.hasLatLng(marker.position)) {
                 centerIcon = '<%= asset_path('elephant.png')%>';
             }
         });
@@ -253,5 +258,4 @@
                     </div>
                 </div>`;
     }
-
 </script>
