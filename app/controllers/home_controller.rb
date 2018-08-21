@@ -39,7 +39,7 @@ class HomeController < ApplicationController
   end
 
   def rating
-    @comment = Comment.new(params.require(:comment).permit(:score, :content, :condom_id))
+    @comment = Comment.new(params.require(:comment).permit(:content, :score))
     @comment.save
   end
   

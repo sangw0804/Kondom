@@ -1,3 +1,15 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
+<script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 
 <div class="d-flex flex-column justify-content-center align-items-center">
@@ -11,13 +23,30 @@
     <div class="ml-2 mr-2">
         <h4 class="review--title mb-3">NAME의 리뷰</h4>
         <div class="border-bottom mb-2">
-          <% @comments.each do |c|%>
-            <h6 class="text-left"><span class="badge badge-pill badge-dark"><%= c.id %></span><%= c.content%></h6>
-            <span class="review--point">★★★★</span>
+        
+        <div class="newreview"></div>
+          <% @comments.each do |r|%>
+          <div class="review__contanier">
+                <p class="review__dataandpoint"><span class="review--date"><%= r.created_at.to_date %> | <span class="review--point">
+                  <% if r.point == 1 %>
+                    ★
+                  <% elsif r.point == 2%>
+                    ★★
+                  <% elsif r.point == 3%>
+                    ★★★
+                  <% elsif r.point == 4%>
+                    ★★★★
+                  <% elsif r.point == 5%>
+                    ★★★★★
+                  <% end %>
+                </span></p>
+                <p class="review--content">
+                    <span class="badge badge-pill badge-dark"><%= r.id %></span><%= r.content%>
+                </p>
           <% end %>
         </div>
         <div class="review__form">
-            <%= form_for @comment, url: {controller: :home, action: :rating} do |f| %>
+            <%= form_for @comment, url: {controller: :home, action: :rating}, remote: true do |f| %>
               <%= label_tag :score, "별점 주기", class: "field__label"%>
               <div class="field field--starpoint">
                <%= f.radio_button :score, 1, checked: true, id: "point--1", class: "field__radio--button"%>
@@ -36,41 +65,45 @@
              <%= f.submit "댓글쓰기" %>
             <% end %>
         </div>
+        </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    $("#review_submit").on("click", function(){
-     $("#review_content").val("");
+    $("#comment_submit").on("click", function(){
+     $("#comment_content").val("");
   
      var p = "★"
-     if ($("#point").val() == 1){
+     if ($("#score").val() == 1){
+         console.log("hi");
        p = "★"
      }
-     else if ($("#point").val() == 2){
+     else if ($("#score").val() == 2){
        p = "★★"
      }
-     else if ($("#point").val() == 3){
+     else if ($("#score").val() == 3){
        p = "★★★"
      }
-     else if ($("#point").val() == 4){
+     else if ($("#score").val() == 4){
        p = "★★★★"
      }
      else{
        p = "★★★★★"
      }
   
-     $(".newreview").append("<div class='review__contanier'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
-     new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p +"<p class='review--content'>"+ $("#content").val() +"</h1>"+
-     "</span></span></p>"+"<p class='review--user'>"+ "pkch93" +"</p>");
+     $(".comment").append("<div class='review__contanier'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
+     new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p + $("#comment").val() +"</h1>"+
+     "</span></span></p>");
     });
   
-    $('.field--starpoint span').click(function(){
+    $('.field--starpoint span').click(function(e){
+    $(".review__form .field__radio--button").removeAttr("checked");
      $(this).parent().children('span').removeClass('staron');
      $(this).addClass('staron').prevAll('span').addClass('staron');
      var x = $(this).attr('value')
-     $("#point").val(x);
+     $("#score").val(x);
      $("#star_point").text(x+"점");
+     $($(".review__form .field__radio--button")[$(e.target).attr("value")-1]).attr("checked", true); //
      return false;
     });
   </script>
