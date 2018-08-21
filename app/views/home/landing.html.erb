@@ -1,27 +1,38 @@
-<div class="row">
-    <div id="logo" class="w-100 mt-5">
-        <%= image_tag("logo.jpg", width: '100%') %>
-        <h1 class="text-center">코끼리야!</h1>
+<div class="container">
+    <div class="row d-flex align-items-stretch h-100">
+        <div id="logo" class="col-8 offset-2 mt-5 pt-5">
+            <%= image_tag("logo2.png", class: "w-100") %>
+        </div>
+        <div id="howto" class="col-12 text-center my-5">
+            <ul>
+                <li>꼭 필요했던 순간이 있지 않나요?</li>
+                <li>혹시 직접 가서 물어보기는 부끄러웠나요?</li>
+                <hr>
+                <li>청록코끼리가 여러분과 함께 해요!</li>
+                <li>주변 2분, 5분, 10분 내의 모든 판매처를</li>
+                <li>여러분의 위치를 기준으로 알려줄게요!</li>
+            </ul>
+        </div>
+        <div id="start" class="w-100 text-center">
+            <a href="/find">
+                <button type="button" class="btn btn-secondary btn-lg w-75">시작하기</button>
+            </a>
+        </div>
     </div>
-    <div id="start" class="w-100 text-center">
-        <a href="/find">
-            <button type="button" class="btn btn-secondary btn-lg w-75">시작하기</button>
-        </a>
-    </div>
-</div>
+</container>
 
 <style>
     body {
         background-color: #EEF7F6;
         font-family: 'Jua', sans-serif;
     }
-    .row {
-        height: 100vh;
+    ul {
+        padding-left: 0px;
     }
-    #logo {
-        width: 100%;
+    li {
+        list-style: none;
     }
-    #start {
-
+    #howto {
+        opacity: 0.4
     }
 </style>

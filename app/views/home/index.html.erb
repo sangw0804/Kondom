@@ -30,7 +30,7 @@
 
 <button id="categorybtn" class="btn btn-danger"><i class="fas fa-plus"></i></button>
 
-<%= render 'category' %>
+<%= render 'category', condoms: @condoms %>
 
 <script>
     //// 전역변수들 ========================================================================
@@ -42,9 +42,7 @@
         minZoom: 8
     });
     let markers = []; // 마커들의 배열
-
-    
-    
+    let circles = [];
     
     
     // 로직 ===============================================================================
@@ -55,14 +53,8 @@
     });
     
     // toggleClass('category2')
-    // css('transform', 'translate(0, -100%)') 
-    
-    
+    // css('transform', 'translate(0, -100%)')
     // 현재위치 버튼 로직
-     
-
-    
-    
     $("#presentLocBtn").click((event) => {
         $(event.target).attr("disabled", true);
         navigator.geolocation.getCurrentPosition(({ coords }) => {
@@ -76,9 +68,10 @@
                 if(status === naver.maps.Service.Status.ERROR) return alert("현재위치 좌표값을 주소로 변환하는 요청이 실패했습니다!");
                 console.log(result.items);
                 const {dongmyun , sigugun} = result.items[1].addrdetail;
-                searchingAround(sigugun+" "+dongmyun);
+                searchingAround(sigugun+" "+dongmyun).then(() => {
+                    setCenterWithMarker(null, null, center);
+                });
             });
-            setCenterWithMarker(null, null, center);
 
             $(event.target).removeAttr("disabled");
         });
@@ -88,15 +81,17 @@
     $("#searchBox").keydown((event) => { // 엔터
         if(event.keyCode === 13) {
             dismissMarkers();
-            searchingAround($("#searchBox").val());
-            searchingCenter($("#searchBox").val());
+            searchingAround($("#searchBox").val()).then(() => {
+                searchingCenter($("#searchBox").val());
+            });
         }
     })
 
     $("#searchbtn").click((event) => {  // searchbtn 클릭
         dismissMarkers();
-        searchingAround($("#searchBox").val());
-        searchingCenter($("#searchBox").val());
+        searchingAround($("#searchBox").val()).then(() => {
+            searchingCenter($("#searchBox").val());
+        });
     })
     
     // 맵에 클릭하면 모달이 show 인경우 hide로 바꿔주는 이벤트 핸들러를 달아준다.
@@ -112,7 +107,7 @@
 
         // home controller로 ajax 요청
         let encodedQuery = encodeURI(searchQuery);
-        axios("/search-around/"+encodedQuery+".json").then(({ data }) => {
+        return axios("/search-around/"+encodedQuery+".json").then(({ data }) => {
             console.log(data);
             // 마커생성
             for(let key of Object.keys(data)) {
@@ -144,7 +139,7 @@
             markers.forEach((mk, index) => naver.maps.Event.addListener(mk,'click', markerClickHandler.bind(this, index)));
         }).catch(err => {
             console.log(err);
-        })
+        });
     }
 
     const searchingCenter = (searchQuery) => {
@@ -163,7 +158,7 @@
     
     // 마커를 클릭하면 모달을 show 상태로 만든다.
     const markerClickHandler = (index, event) => {
-        console.log(markers[index]);
+        console.log(markers[index].position);
         $("#modal h5").html(markers[index].title);
         $("#modal h6").html(markers[index].type.toUpperCase());
         $("#modal .tel").text(markers[index].tel);
@@ -185,21 +180,23 @@
     const setCenterWithMarker = (katecX, katecY, latLng = null) => {
         let searchedLatLng;
         if(latLng) {
-            searchedLatLng = latLng;   
+            searchedLatLng = latLng;
         } else {
             searchedLatLng = fromKatecToLatLng(katecX, katecY);
         }
-        
-        var circle = new naver.maps.Circle({
+        circles.forEach(circle => {circle.setMap(null)});  // 기존의 원 레이어 제거
+        circles = [];
+
+        circles.push(new naver.maps.Circle({
             map: map,
             center: searchedLatLng,
             radius: 70,
             strokeOpacity: 0,
             fillColor: "#37D53C",
             fillOpacity: 0.3
-        });
+        }));
 
-        var circle = new naver.maps.Circle({
+        circles.push(new naver.maps.Circle({
             map: map,
             center: searchedLatLng,
             radius: 175,
@@ -207,9 +204,9 @@
             strokeColor: 'yellow',
             fillColor: 'yellow',
             fillOpacity: 0.2
-        });
+        }));
 
-        var circle = new naver.maps.Circle({
+        circles.push(new naver.maps.Circle({
             map: map,
             center: searchedLatLng,
             radius: 350,
@@ -217,15 +214,21 @@
             strokeColor: 'red',
             fillColor: 'red',
             fillOpacity: 0.05
+        }));
+        let centerIcon = '<%= asset_path('sad_elephant.png')%>';
+
+        let yellowCircleBound = circles[1].getBounds();
+        markers.forEach(marker => {
+            if(yellowCircleBound.hasLatLng(marker.position)) {
+                centerIcon = '<%= asset_path('elephant.png')%>';
+            }
         });
         
         let marker = new naver.maps.Marker({
             map: map,
             position: searchedLatLng,
             title: "현재 위치",
-            icon: {
-                url:'<%= asset_path('elephant.png')%>'
-            },
+            icon: centerIcon,
             zIndex: 101,
             animation: naver.maps.Animation.BOUNCE
         })

@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   end
 
   def index
-    
+    @condoms = Condom.all
   end
 
   def search_around
