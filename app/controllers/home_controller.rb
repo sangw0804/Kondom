@@ -8,6 +8,7 @@ class HomeController < ApplicationController
   end
 
   def index
+    
   end
 
   def search_around
@@ -32,6 +33,16 @@ class HomeController < ApplicationController
     end
   end
 
+  def hot
+    @comments = Comment.all
+    @comment = Comment.new
+  end
+
+  def rating
+    @comment = Comment.new(params.require(:comment).permit(:score, :content, :condom_id))
+    @comment.save
+  end
+  
   private
    def get_infos(query)
     keywords = ["gs25","cu","미니스톱","세븐일레븐","올리브영","약국","성인용품","왓슨스","롭스"]
@@ -52,7 +63,7 @@ class HomeController < ApplicationController
       else
         results[keyword]["condoms"] = Condom.where({store: "drug"}).as_json.shuffle
         t = Time.new
-        if t.wday >= 1 and t.wday <=5
+        if t.wday >= 1 and t.wday <= 5
           results[keyword]["time"] = "10:00 ~ 20:00"
         else
           results[keyword]["time"] = "휴무"
