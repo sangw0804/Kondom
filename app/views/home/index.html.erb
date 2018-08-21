@@ -22,8 +22,14 @@
         <div class="input-group-append">
             <button id="searchbtn" class="btn btn-primary"><i class="fas fa-search"></i></button>
             <button id="presentLocBtn" class="btn btn-warning"><i class="fas fa-location-arrow"></i></button>
-        </div>
-    </div>
+        </div>        
+    </div>    
+</div>
+
+<button id="categorybtn" class="btn btn-warning"><i class="fas fa-location-arrow"></i></button>
+
+<div class="category1">
+<h2>hello</h2>
 </div>
 
 <script>
@@ -32,12 +38,27 @@
     let map = new naver.maps.Map(mapDiv, {
         logoControl: false,
         mapDataControl: false,
-        zoom:13
+        zoom:12
     });
     let markers = []; // 마커들의 배열
 
+    
+    
+    
+    
     // 로직 ===============================================================================
     // 현재위치 버튼 로직
+    
+
+    $("#categorybtn").click(() => {
+        $('.category1').toggleClass('categoryshow')   
+    });
+    
+    // toggleClass('category2')
+    // css('transform', 'translate(0, -100%)')   
+
+    
+    
     $("#presentLocBtn").click((event) => {
         $(event.target).attr("disabled", true);
         navigator.geolocation.getCurrentPosition(({ coords }) => {
@@ -117,6 +138,8 @@
     const searchingCenter = (searchQuery) => {
         let encodedQuery = encodeURI(searchQuery);
         axios("/search-center/" + encodedQuery +".json").then(({data}) => {
+
+
             setCenterWithMarker(data.mapx, data.mapy);
         }).catch(err => {
             console.log(err);
@@ -150,6 +173,39 @@
         } else {
             searchedLatLng = fromKatecToLatLng(katecX, katecY);
         }
+        
+        var circle = new naver.maps.Circle({
+            map: map,
+            center: searchedLatLng,
+            radius: 70,
+            strokeOpacity: 0,
+            fillColor: "#37D53C",
+            fillOpacity: 0.3
+        });
+
+        var circle = new naver.maps.Circle({
+            map: map,
+            center: searchedLatLng,
+            radius: 175,
+            strokeOpacity: 0,
+            strokeColor: 'yellow',
+            fillColor: 'yellow',
+            fillOpacity: 0.2
+        });
+
+        var circle = new naver.maps.Circle({
+            map: map,
+            center: searchedLatLng,
+            radius: 350,
+            strokeOpacity: 0,
+            strokeColor: 'red',
+            fillColor: 'red',
+            fillOpacity: 0.05
+        });
+        
+
+        
+
         let marker = new naver.maps.Marker({
             map: map,
             position: searchedLatLng,
@@ -159,6 +215,7 @@
         })
         markers.push(marker);
         map.setCenter(searchedLatLng);
+        map.setZoom(12, true)
     }
 
 </script>

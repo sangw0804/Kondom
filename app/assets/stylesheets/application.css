@@ -35,6 +35,33 @@ html, body {
     top: 5%;
 }
 
+#categorybtn {
+    position: fixed;
+    width: 11%;
+    left: 5%;
+    z-index: 14;
+    top: 90%;
+}
+
+.category1 {
+    z-index: 12;
+    position: fixed;
+    left: 0;
+    top:0;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    transform: translate(500px);
+    transition: all 0.4s ease-in;
+}
+
+.categoryshow {
+    transform: translate(0);
+}
+
+
+
+
 /* #presentLocBtn {
     width:20%;
     height: 4%;
