@@ -36,13 +36,16 @@ class HomeController < ApplicationController
   def hot
     @comments = Comment.all
     @comment = Comment.new
+    @condom = Condom.find_by_id(params[:id])
+
   end
 
   def rating
-    @comment = Comment.new(params.require(:comment).permit(:content, :score))
-    @comment.save
+    @comment = Comment.new(params.require(:comment).permit(:condom_id, :content, :score))
+    @comment.save    
   end
   
+
   private
    def get_infos(query)
     keywords = ["gs25","cu","미니스톱","세븐일레븐","올리브영","약국","성인용품","왓슨스","롭스"]
