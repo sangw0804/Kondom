@@ -28,15 +28,15 @@
           <% @comments.each do |r|%>
           <div class="review__contanier">
                 <p class="review__dataandpoint"><span class="review--date"><%= r.created_at.to_date %> | <span class="review--point">
-                  <% if r.point == 1 %>
+                  <% if r.score == 1 %>
                     ★
-                  <% elsif r.point == 2%>
+                  <% elsif r.score == 2%>
                     ★★
-                  <% elsif r.point == 3%>
+                  <% elsif r.score == 3%>
                     ★★★
-                  <% elsif r.point == 4%>
+                  <% elsif r.score == 4%>
                     ★★★★
-                  <% elsif r.point == 5%>
+                  <% elsif r.score == 5%>
                     ★★★★★
                   <% end %>
                 </span></p>
