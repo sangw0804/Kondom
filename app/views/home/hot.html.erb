@@ -65,14 +65,8 @@
 
 <script type="text/javascript">
     $("#comment_submit").on("click", function(){
-<<<<<<< HEAD
         $("#content").val("");
 
-=======
-        $("#comment_content").val("");
-        $(".review--point2")[0].remove();
-        $(".score").append("<div class='review--point2'>" + "<%='★'* (@condom.score || 1) %>" + "</div>")
->>>>>>> 83692b924d48395d7cdbe689505349b5b3aed7ca
      var p = "★"
      if ($("#onestar").attr("checked") == "checked"){
        p = "★"
@@ -93,11 +87,6 @@
      $(".newreview").append("<div class='review__contanier border-bottom pb-2'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
      new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p + "</span>" + "<p>" 
      + $("#content").val() + "</p>" + "</span></p>");
-<<<<<<< HEAD
-
-=======
-     
->>>>>>> 83692b924d48395d7cdbe689505349b5b3aed7ca
     });
 
         $('.field--starpoint span').click(function(e){
