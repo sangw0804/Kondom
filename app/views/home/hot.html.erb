@@ -16,7 +16,7 @@
     <div class="hot-img border rounded mt-4"><%=image_tag @condom.image, :style => "width:100%; height:100%" %></div>
     <div class="mt-4"><h4><span class="badge badge-pill badge-secondary">1위</span> <%=@condom.name %></h4></div>
     <div><h6>간단한 설명쓰</h6></div>
-    <div class="review--point"><%="★"* (@condom.score || 4) %></div>
+    <div class="score"><div class="review--point2"><%="★"* (@condom.score || 1) %></div></div>
 </div>
 <div class="d-flex flex-column bg-light mt-5">
     <div class="ml-2 mr-2">
@@ -66,7 +66,8 @@
 <script type="text/javascript">
     $("#comment_submit").on("click", function(){
         $("#comment_content").val("");
-  
+        $(".review--point2")[0].remove();
+        $(".score").append("<div class='review--point2'>" + "<%='★'* (@condom.score || 4) %>" + "</div>")
      var p = "★"
      if ($("#onestar").attr("checked") == "checked"){
        p = "★"
@@ -87,6 +88,7 @@
      $(".newreview").append("<div class='review__contanier border-bottom pb-2'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
      new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p + "</span>" + "<p>" 
      + $("#content").val() + "</p>" + "</span></p>");
+     
     });
   
     $('.field--starpoint span').click(function(e){
