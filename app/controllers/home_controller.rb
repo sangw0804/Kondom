@@ -8,7 +8,8 @@ class HomeController < ApplicationController
   end
 
   def index
-    @condoms = Condom.all
+    @condoms = Condom.all.order('score DESC')
+    
   end
 
   def search_around
@@ -37,12 +38,25 @@ class HomeController < ApplicationController
     @comments = Comment.where(["condom_id = ?", params[:id]])
     @comment = Comment.new
     @condom = Condom.find_by_id(params[:id])
-
+    
   end
 
   def rating
     @comment = Comment.new(params.require(:comment).permit(:condom_id, :content, :score))
-    @comment.save    
+    @comment.save
+    
+    @condom = @comment.condom
+    
+    @comments = @condom.comments
+    
+    sum = 0
+    @comments.each do |comment|
+      sum += comment.score
+    end
+
+    avg = sum/@comments.length
+    @condom.score = avg.round
+    @condom.save  
   end
   
 
