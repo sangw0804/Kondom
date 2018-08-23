@@ -16,53 +16,47 @@
     <div class="hot-img border rounded mt-4"><%=image_tag @condom.image, :style => "width:100%; height:100%" %></div>
     <div class="mt-4"><h4><span class="badge badge-pill badge-secondary">1위</span> <%=@condom.name %></h4></div>
     <div><h6>간단한 설명쓰</h6></div>
-    <div class="review--point">★★★★★</div>
+    <div class="review--point"><%="★"* (@condom.score || 4) %></div>
 </div>
-<div class="d-flex flex-column bg-light mt-5" style="height: 400px;">
+<div class="d-flex flex-column bg-light mt-5">
     <div class="ml-2 mr-2">
         <h4 class="review--title mb-3">NAME의 리뷰</h4>
-        <div class="border-bottom mb-2">
-            <% n = 1 %>
+        <div class="border-bottom mb-2 review-box">
             <% @comments.each do |r|%>
                 <div class="review__contanier border-bottom pb-2">
-                    <p class="review__dataandpoint"><span class="review--date"><%= r.created_at.to_date %> | <span class="review--point">
-                    <% if r.score == 1 %>
-                        ★
-                    <% elsif r.score == 2%>
-                        ★★
-                    <% elsif r.score == 3%>
-                        ★★★
-                    <% elsif r.score == 4%>
-                        ★★★★
-                    <% elsif r.score == 5%>
-                        ★★★★★
-                    <% end %>
-                    </span></p>
-                    <span class="badge badge-pill badge-dark"><%= n %></span> <%= r.content%>
+                    <p class="review__dataandpoint">
+                        <span class="review--date">
+                            <%= r.created_at.to_date %> | 
+                        </span>
+                        <span class="review--point">
+                            <%= "★" * r.score %>
+                        </span>
+                    </p>
+                    <%= r.content%>
                 </div>
-            <% n += 1%>
             <% end %>
+          <div class="newreview"></div>
         </div>
         <div class="review__form">
-            <%= form_for @comment, url: {controller: :home, action: :rating}, remote: true do |f| %>
+            <%= form_for @comment, url: {controller: :home, action: :rating}, remote: true, id: "comment_content" do |f| %>
               <%= f.hidden_field :condom_id, :value => @condom.id %>
               <%= label_tag :score, "별점 주기", class: "field__label"%>
               <div class="field field--starpoint">
-               <%= f.radio_button :score, 1, checked: true, id: "point--1", class: "field__radio--button"%>
+               <%= f.radio_button :score, 1, checked: true, id: "onestar", class: "field__radio--button"%>
                  <span class="field__radio--point staron" value="1">★</span>
-               <%= f.radio_button :score, 2, id: "point--2", class: "field__radio--button"%>
+               <%= f.radio_button :score, 2, id: "twostar", class: "field__radio--button"%>
                  <span class="field__radio--point " value="2">★</span>
-               <%= f.radio_button :score, 3, id: "point--3", class: "field__radio--button"%>
+               <%= f.radio_button :score, 3, id: "threestar", class: "field__radio--button"%>
                  <span class="field__radio--point" value="3">★</span>
-               <%= f.radio_button :score, 4, id: "point--4", class: "field__radio--button"%>
+               <%= f.radio_button :score, 4, id: "fourstar", class: "field__radio--button"%>
                  <span class="field__radio--point " value="4">★</span>
-               <%= f.radio_button :score, 5, id: "point--5", class: "field__radio--button"%>
+               <%= f.radio_button :score, 5, id: "fivestar", class: "field__radio--button"%>
                  <span class="field__radio--point " value="5">★</span>
               </div>
              <%= label_tag :content, "리뷰 작성", class: "field__content field__label" %>
-             <%= f.text_area :content %>
+             <%= f.text_area :content, id: "content" %>
              <%= f.hidden_field :condom_id, value: @condom.id %>
-             <%= f.submit "댓글쓰기" %>
+             <%= f.submit "댓글쓰기", id: "comment_submit" %>
             <% end %>
         </div>
         </div>
@@ -71,29 +65,28 @@
 
 <script type="text/javascript">
     $("#comment_submit").on("click", function(){
-     $("#comment_content").val("");
+        $("#comment_content").val("");
   
      var p = "★"
-     if ($("#score").val() == 1){
-         console.log("hi");
+     if ($("#onestar").attr("checked") == "checked"){
        p = "★"
      }
-     else if ($("#score").val() == 2){
+     else if ($("#twostar").attr("checked") == "checked"){
        p = "★★"
      }
-     else if ($("#score").val() == 3){
+     else if ($("#threestar").attr("checked") == "checked"){
        p = "★★★"
      }
-     else if ($("#score").val() == 4){
+     else if ($("#fourstar").attr("checked") == "checked"){
        p = "★★★★"
      }
-     else{
+     else if ($("#fivestar").attr("checked") == "checked"){
        p = "★★★★★"
      }
   
-     $(".comment").append("<div class='review__contanier'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
-     new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p + $("#comment").val() +"</h1>"+
-     "</span></span></p>");
+     $(".newreview").append("<div class='review__contanier border-bottom pb-2'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
+     new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p + "</span>" + "<p>" 
+     + $("#content").val() + "</p>" + "</span></p>");
     });
   
     $('.field--starpoint span').click(function(e){

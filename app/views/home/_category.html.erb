@@ -14,12 +14,13 @@
           </div>
         </div>
       </div>
+      
       <% @condoms.each do |condom| %>
         <div class="col-6 card-white" style="width: 18rem;">
-          <%= link_to image_tag(condom.image, class:"card-img-top"), "/hot/#{condom.id}" %>
+          <%= link_to image_tag(condom.image, style:"height: 70%;", class:"card-img-top"), "/hot/#{condom.id}" %>
           <div class="card-body" style="padding: 0px" >
             <p class="card-text" style="margin-bottom : 0px; font-size: 0.8rem"><%= condom.name %></p>
-            <p class="card-text" style="color: orange; font-size: 1rem"> <%= '★' * rand(2...5) %>            
+            <p class="card-text" style="color: orange; font-size: 1rem"> <%= '★' * (condom.score || 4) %>            
           </div>
         </div>
       <% end %>
