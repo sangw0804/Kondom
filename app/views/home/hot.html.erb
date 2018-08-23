@@ -12,7 +12,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <div class="d-flex flex-column justify-content-center align-items-center">
-    <div class="bg-warning text-white w-100" style="height=70px;"><h3 class="mt-1 ml-2"><%= link_to '<', find_path, class: "text-white text-left" %></h3></div>
+    <div class="bg-warning text-white w-100" style="height=70px;"><h3 class="mt-1 ml-2"><%= link_to '<', "/find", class: "text-white text-left" %></h3></div>
     <div class="hot-img border rounded mt-4"><%=image_tag @condom.image, :style => "width:100%; height:100%" %></div>
     <div class="mt-4"><h4><span class="badge badge-pill badge-secondary"><%= @rank.to_s + '위'%></span> <%=@condom.name %></h4></div>
     <div><h6><%=@condom.describe %></h6></div>
@@ -104,15 +104,15 @@
 
 <script>
         // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
+        // window.onscroll = function() {scrollFunction()};
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("myBtn").style.display = "block";
-            } else {
-                document.getElementById("myBtn").style.display = "none";
-            }
-        }
+        // function scrollFunction() {
+        //     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        //         document.getElementById("myBtn").style.display = "block";
+        //     } else {
+        //         document.getElementById("myBtn").style.display = "none";
+        //     }
+        // }
         function topFunction() {
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;

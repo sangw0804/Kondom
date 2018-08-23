@@ -3,7 +3,6 @@ class HomeController < ApplicationController
   require 'json'
   require 'cgi'
 
-
   def landing
   end
 
