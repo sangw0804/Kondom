@@ -1,18 +1,27 @@
 <div class="category1">
+    <nav class="navbar navbar-light bg-light d-flex flex-column justify-content-center align-items-center">
+      <div>
+        <%=link_to image_tag("bwlogo.png", class:" logologo") %> 
+      </div>
+    </nav>
   <div class="container-fluid">
     <div class="row">
       <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" style="width: 100%">
         <div class="carousel-inner" >
           <div class="carousel-item active">
-          <%=link_to image_tag("ad1.jpg"), size:"100%", class:"d-block" %> 
+           <%=link_to image_tag("ad1.jpg", size:"350x250", class:"d-block") %> 
           </div>
           <div class="carousel-item">
-            <img class="d-block w-70" src="https://cdn.pixabay.com/photo/2015/07/17/15/40/red-condoms-849407_960_720.jpg" alt="Second slide">
+            <%=link_to image_tag("ad2.jpg", size:"350x250", class:"d-block") %>
           </div>
           <div class="carousel-item">
-            <img class="d-block w-70" src="https://cdn.pixabay.com/photo/2015/07/17/15/40/red-condoms-849407_960_720.jpg" alt="Third slide">
+            <%=link_to image_tag("ad1.jpg", size:"350x250", class:"d-block") %>
           </div>
         </div>
+      </div>
+
+      <div class="hotitem d-flex justify-content-center align-items-center">
+         <%=link_to image_tag("hot.png", size:"175x60", class:"d-block") %>
       </div>
       
       <% @condoms.each do |condom| %>

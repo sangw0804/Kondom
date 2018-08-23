@@ -168,6 +168,20 @@ html, body {
     height: 200px;
 }
 
+.logologo{
+    width: 80px;
+    height: 40px;
+}
+
+.hotitem{
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.text-font {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
 .star_rating {font-size:0; letter-spacing:-4px;}
 .star_rating a {
   font-size:40px;
