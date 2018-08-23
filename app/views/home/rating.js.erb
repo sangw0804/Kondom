@@ -1,0 +1,4 @@
+console.log("<%= @condom.score %>");
+$("#review-box").empty();
+let stars = "<div>"+ "★".repeat(<%= @condom.score %>) + "</div>";
+$("#review-box").append(stars); 

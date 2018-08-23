@@ -16,7 +16,7 @@
     <div class="hot-img border rounded mt-4"><%=image_tag @condom.image, :style => "width:100%; height:100%" %></div>
     <div class="mt-4"><h4><span class="badge badge-pill badge-secondary"><%= @rank.to_s + '위'%></span> <%=@condom.name %></h4></div>
     <div><h6><%=@condom.describe %></h6></div>
-    <div class="review--point"><%="★"* (@condom.score || 1) %></div>
+    <div class="review--point" id="review-box"><%="★"* (@condom.score || 1) %></div>
 </div>
 <div class="d-flex flex-column bg-light mt-5">
     <div class="ml-2 mr-2">
@@ -65,8 +65,8 @@
 
 <script type="text/javascript">
     $("#comment_submit").on("click", function(){
-        $("#comment_content").val("");
-  
+        $("#content").val("");
+
      var p = "★"
      if ($("#onestar").attr("checked") == "checked"){
        p = "★"
@@ -87,9 +87,10 @@
      $(".newreview").append("<div class='review__contanier border-bottom pb-2'>"+ "<p class='review__dataandpoint'><span class='review--date'>"+
      new Date().toISOString().substring(0,10) + " | "+"<span class='review--point'>"+ p + "</span>" + "<p>" 
      + $("#content").val() + "</p>" + "</span></p>");
+
     });
-  
-    $('.field--starpoint span').click(function(e){
+
+        $('.field--starpoint span').click(function(e){
     $(".review__form .field__radio--button").removeAttr("checked");
      $(this).parent().children('span').removeClass('staron');
      $(this).addClass('staron').prevAll('span').addClass('staron');
@@ -99,6 +100,7 @@
      $($(".review__form .field__radio--button")[$(e.target).attr("value")-1]).attr("checked", true); //
      return false;
     });
+  
   </script>
   
 
