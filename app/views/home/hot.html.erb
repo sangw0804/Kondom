@@ -67,7 +67,7 @@
     $("#comment_submit").on("click", function(){
         $("#comment_content").val("");
         $(".review--point2")[0].remove();
-        $(".score").append("<div class='review--point2'>" + "<%='★'* (@condom.score || 4) %>" + "</div>")
+        $(".score").append("<div class='review--point2'>" + "<%='★'* (@condom.score || 1) %>" + "</div>")
      var p = "★"
      if ($("#onestar").attr("checked") == "checked"){
        p = "★"
