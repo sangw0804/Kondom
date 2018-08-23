@@ -3,12 +3,14 @@ class HomeController < ApplicationController
   require 'json'
   require 'cgi'
 
-
   def landing
   end
 
   def index
     @condoms = Condom.all
+    # File.open("data.json", "w+") do |f|
+    #   f.write(JSON.generate(@condoms.as_json))
+    # end
   end
 
   def search_around
