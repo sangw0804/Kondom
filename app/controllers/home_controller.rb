@@ -38,6 +38,10 @@ class HomeController < ApplicationController
     @comment = Comment.new
     @condom = Condom.find_by_id(params[:id])
     
+    @condoms = Condom.all.order('score DESC')
+    @row = @condoms.find_by_id(params[:id])
+    @rank = @condoms.find_index(@row) + 1    
+
   end
 
   def rating
