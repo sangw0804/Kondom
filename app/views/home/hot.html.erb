@@ -14,9 +14,9 @@
 <div class="d-flex flex-column justify-content-center align-items-center">
     <div class="bg-warning text-white w-100" style="height=70px;"><h3 class="mt-1 ml-2"><%= link_to '<', find_path, class: "text-white text-left" %></h3></div>
     <div class="hot-img border rounded mt-4"><%=image_tag @condom.image, :style => "width:100%; height:100%" %></div>
-    <div class="mt-4"><h4><span class="badge badge-pill badge-secondary">1위</span> <%=@condom.name %></h4></div>
-    <div><h6>간단한 설명쓰</h6></div>
-    <div class="review--point"><%="★"* (@condom.score || 4) %></div>
+    <div class="mt-4"><h4><span class="badge badge-pill badge-secondary"><%= @rank.to_s + '위'%></span> <%=@condom.name %></h4></div>
+    <div><h6><%=@condom.describe %></h6></div>
+    <div class="review--point"><%="★"* (@condom.score || 1) %></div>
 </div>
 <div class="d-flex flex-column bg-light mt-5">
     <div class="ml-2 mr-2">
