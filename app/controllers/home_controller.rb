@@ -67,9 +67,14 @@ class HomeController < ApplicationController
     print(nowTime[2])
     keywords.each do |keyword|
       encodedQuery = CGI::escape(query + " 근처 " + keyword)
-      data = JSON.load(open("https://openapi.naver.com/v1/search/local.json?query=#{encodedQuery}&start=1&display=50",
-      "X-Naver-Client-Secret" => "NteRqJBSgR",
-      "X-Naver-Client-Id" => "hoAJkV1ejgYLcx1aMVWu"))["items"]
+      begin
+        data = JSON.load(open("https://openapi.naver.com/v1/search/local.json?query=#{encodedQuery}&start=1&display=50",
+        "X-Naver-Client-Secret" => "NteRqJBSgR",
+        "X-Naver-Client-Id" => "hoAJkV1ejgYLcx1aMVWu"))["items"]
+      rescue
+        puts keyword
+        data = []
+      end
       results[keyword] = {"list" => nil, "condoms" => []}
       results[keyword]["list"] = data
       if ["gs25","cu","미니스톱","세븐일레븐"].include?(keyword)
