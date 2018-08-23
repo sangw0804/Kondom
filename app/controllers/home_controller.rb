@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   end
 
   def index
-    @condoms = Condom.all
+    @condoms = Condom.all.order('score DESC')
     
   end
 
@@ -35,7 +35,7 @@ class HomeController < ApplicationController
   end
 
   def hot
-    @comments = Comment.all
+    @comments = Comment.where(["condom_id = ?", params[:id]])
     @comment = Comment.new
     @condom = Condom.find_by_id(params[:id])
     
