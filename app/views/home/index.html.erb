@@ -17,6 +17,8 @@
     </div>
 </div>
 
+<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+
 <div id="map" style="height: 100vh;">
     <div class="input-group" id="search">
         <input id="searchBox" class="form-control" placeholder="검색해주세요." />
@@ -55,41 +57,29 @@
     // css('transform', 'translate(0, -100%)')
     // 현재위치 버튼 로직
     $("#presentLocBtn").click((event) => {
+        showSpinner();
         $(event.target).attr("disabled", true);
-        navigator.geolocation.getCurrentPosition(({ coords }) => {
-            dismissMarkers();
-            let center = new naver.maps.LatLng(coords.latitude, coords.longitude );
-
-            // 현재위치 좌표값 => 주소로 변환
-            naver.maps.Service.reverseGeocode({
-                location: center, coordType: naver.maps.Service.CoordType.LatLng
-            },(status, {result}) => {
-                if(status === naver.maps.Service.Status.ERROR) return alert("현재위치 좌표값을 주소로 변환하는 요청이 실패했습니다!");
-                console.log(result.items);
-                const {dongmyun , sigugun} = result.items[1].addrdetail;
-                searchingAround(sigugun+" "+dongmyun).then(() => {
-                    setCenterWithMarker(null, null, center);
-                });
-            });
-
-            $(event.target).removeAttr("disabled");
-        });
+       
     });
 
     // 검색하면 검색위치로 setCenter & 키워드 사용 근처 콘돔판매점 검색해 json 리턴
     $("#searchBox").keydown((event) => { // 엔터
         if(event.keyCode === 13) {
+            showSpinner();
             dismissMarkers();
             searchingAround($("#searchBox").val()).then(() => {
                 searchingCenter($("#searchBox").val());
+                hideSpinner();
             });
         }
     })
 
     $("#searchbtn").click((event) => {  // searchbtn 클릭
+        showSpinner();
         dismissMarkers();
         searchingAround($("#searchBox").val()).then(() => {
             searchingCenter($("#searchBox").val());
+            hideSpinner();
         });
     })
     
@@ -102,6 +92,32 @@
 
     //// 함수들 ====================================================================================
 
+   const hideSpinner = () => {
+        $(".lds-ring").attr("style", "display: none;");
+    }
+     const showSpinner = () => {
+        $(".lds-ring").removeAttr("style");
+    }
+     const searchPresentLoc = () => {
+        navigator.geolocation.getCurrentPosition(({ coords }) => {
+            dismissMarkers();
+            let center = new naver.maps.LatLng(coords.latitude, coords.longitude );
+             // 현재위치 좌표값 => 주소로 변환
+            naver.maps.Service.reverseGeocode({
+                location: center, coordType: naver.maps.Service.CoordType.LatLng
+            },(status, {result}) => {
+                if(status === naver.maps.Service.Status.ERROR) return alert("현재위치 좌표값을 주소로 변환하는 요청이 실패했습니다!");
+                console.log(result.items);
+                const {dongmyun , sigugun} = result.items[1].addrdetail;
+                searchingAround(sigugun+" "+dongmyun).then(() => {
+                    setCenterWithMarker(null, null, center);
+                    $(event.target).removeAttr("disabled");
+                    hideSpinner();
+                });
+            });
+        });
+    }
+
     const searchingAround = (searchQuery) => {
 
         // home controller로 ajax 요청
@@ -112,9 +128,10 @@
             for(let key of Object.keys(data)) {
                 data[key].list.forEach(datum => {
                     let iconUrl = "";
-                    switch (key) {
-                        case "약국": iconUrl = '<%= asset_path('icons/drug.png')%>'; break;
-                        default: iconUrl = '<%= asset_path('icons/conven.png')%>'; break;
+                    switch (true) {
+                        case key === "약국": iconUrl = data[key].open ? '<%= asset_path('icons/drug.png')%>' : '<%= asset_path('icons/drug_close.png')%>' ; break;
+                        case ["올리브영","롭스","왓슨스"].includes(key):  iconUrl = data[key].open ? '<%= asset_path('icons/drugStore.png')%>' : '<%= asset_path('icons/drugStore_close.png')%>' ; break;
+                        default:  iconUrl = data[key].open ? '<%= asset_path('icons/conven.png')%>' : '<%= asset_path('icons/conven_close.png')%>' ; break;
                     }
                     let marker = new naver.maps.Marker({
                         map: map,
@@ -257,4 +274,6 @@
                     </div>
                 </div>`;
     }
+
+    window.onload = searchPresentLoc;
 </script>
