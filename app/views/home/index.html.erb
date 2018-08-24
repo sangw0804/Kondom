@@ -186,9 +186,9 @@
         $("#modal h6").html(markers[index].type.toUpperCase());
         
         if (!markers[index].tel) {
-        $("#modal .tel").html();
+            $("#modal .tel").html();
         } else {
-        $("#modal .tel").html("<span class='badge badge-primary'>call</span>" + " " + " " + (markers[index].tel) );
+            $("#modal .tel").html("<span class='badge badge-primary'>call</span>" + " " + " " + (markers[index].tel) );
         }
         $("#modal .time").text(markers[index].time);
         
