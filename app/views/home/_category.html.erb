@@ -23,15 +23,24 @@
       <div class="hotitem d-flex justify-content-center align-items-center">
          <%=link_to image_tag("hot.png", size:"175x60", class:"d-block") %>
       </div>
-      
+      <% index = 1 %>
       <% @condoms.each do |condom| %>
-        <div class="col-6 card-white" style="width: 18rem;">
+        
+        <div class="col-6 card-white nanum" style="width: 18rem;">
           <%= link_to image_tag(condom.image, style:"height: 70%;", class:"card-img-top"), "/hot/#{condom.id}" %>
-          <div class="card-body" style="padding: 0px" >
-            <p class="card-text text-center text-font" style="margin-bottom : 0px; font-size: 0.8rem"><%= condom.name %></p>
-            <p class="card-text text-center text-font" style="color: orange; font-size: 1rem"> <%= '★' * (condom.score || 1) %>            
+          <div class="row">
+          <div class="card-body text-left col-9" style="padding-left: 10%; padding-right:0; padding-top:0; padding-bott margin:0px" >
+           
+              <span class="card-text  text-font" style="margin-bottom : 0px; font-size: 0.8rem; font-weight:bold"><%= truncate(condom.name, length: 10) %></span>
+              <br><span class="card-text  text-font" style="font-size: 0.7rem;"> (초박형) <i class="fas fa-pen-square"> <%=(condom.comments.count)%> </i>  </span>
+           
+          </div>
+          <div class = "col-3"style="padding: 0px; margin:0px">
+          <p style="font-size: 1.6rem; color:red"> <%=condom.score %> </p>
+          </div>
           </div>
         </div>
+        <% index = index.to_i + 1%>
       <% end %>
     </div>
   </div>
