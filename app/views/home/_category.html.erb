@@ -25,15 +25,16 @@
       <div class="hotitem d-flex justify-content-center align-items-center">
          <%=link_to image_tag("hot.png", size:"175x60", class:"d-block") %>
       </div>
-      
+      <% index = 1%>
       <% @condoms.each do |condom| %>
         <div class="col-6 card-white" style="width: 18rem;">
-          <%= link_to image_tag(condom.image, style:"height: 70%;", class:"card-img-top"), "/hot/#{condom.id}" %>
+          <div class="item h4" style="height: 220px;"><span class="badge badge-pill badge-warning text-dark notify-badge"><%=index%></span><%= link_to image_tag(condom.image, style:"height: 175px; margin-top: 45px;"), "/hot/#{condom.id}" %></div>
           <div class="card-body" style="padding: 0px" >
             <p class="card-text text-center text-font" style="margin-bottom : 0px; font-size: 0.8rem"><%= condom.name %></p>
             <p class="card-text text-center text-font" style="color: orange; font-size: 1rem"> <%= '★' * (condom.score || 1) %>            
           </div>
         </div>
+     <%index = index + 1%>
       <% end %>
     </div>
   </div>
