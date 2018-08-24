@@ -29,8 +29,8 @@
     <div class="input-group nanum" id="search">
         <input id="searchBox" class="form-control" placeholder="검색해주세요." />
         <div class="input-group-append">
-            <button id="searchbtn" class="btn btn-primary"><i class="fas fa-search"></i></button>
-            <button id="presentLocBtn" class="btn btn-warning"><i class="fas fa-location-arrow"></i></button>
+            <button id="searchbtn" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+            <button id="presentLocBtn" class="btn btn-info"><i class="fas fa-map-marker-alt"></i></button>
         </div>        
     </div>    
 </div>
@@ -310,7 +310,7 @@
                         <div style="width:7rem">
                         <p style="font-size: 0.7rem; font-weight: bold; margin:0">${condom.price} 원</p>
                         <p style="font-size: 0.7rem; font-weight: bold; margin:0">${ct[condom.conType]}</p>
-                        <p style="font-size: 0.9rem; font-weight: bold; margin:0; display:inline"><span style="color:gold; float:left;">${"★".repeat(condom.score || 1)}</span><span style="float:right"> (${condom.score || 1.8})</span> </p>
+                        <p style="font-size: 0.9rem; font-weight: bold; margin:0; display:inline"><span style="color:gold; float:left;">${"★".repeat(condom.score || 1)}</span><span style="float:right"> ${condom.score || 1.8}</span> </p>
                         </div>
                     </div>
                 </div>`;
