@@ -17,6 +17,11 @@
 * element that contains the map. */
 
 /* index.html */
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+.nanum {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
 #map {
     height: 80%;
 }
@@ -114,10 +119,11 @@ html, body {
     background-color: white;
 } */
 
-/* #searchBox {
-    position: fixed;
-    z-index: 10;
-} */
+.center {
+    margin-left: auto;
+    display: inline;
+    
+}
 
 #modal {
     transition: opacity .3s ease-out;
@@ -164,6 +170,20 @@ html, body {
 .hot-img {
     width: 200px;
     height: 200px;
+}
+
+.logologo{
+    width: 80px;
+    height: 40px;
+}
+
+.hotitem{
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.text-font {
+    font-family: 'Nanum Gothic', sans-serif;
 }
 
 .star_rating {font-size:0; letter-spacing:-4px;}
