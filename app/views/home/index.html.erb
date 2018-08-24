@@ -7,6 +7,7 @@
                 <h5>title</h5>
             </div>
             <div class="modal-body" style="height: 470px;">
+                
                 <p class="text-right" style="margin-bottom: 2px"><span class="badge badge-primary">time</span> <span class="time"></span></p>
                 <p class="text-right"><span class="badge badge-primary">call</span> <span class="tel"></span></p>
                 <div id="container">
@@ -25,7 +26,7 @@
             <button id="searchbtn" class="btn btn-primary"><i class="fas fa-search"></i></button>
             <button id="presentLocBtn" class="btn btn-warning"><i class="fas fa-location-arrow"></i></button>
         </div>        
-    </div>
+    </div>    
 </div>
 
 <button id="categorybtn" class="btn btn-danger"><i class="fas fa-plus"></i></button>
@@ -46,6 +47,7 @@
     
     
     // 로직 ===============================================================================
+    
     // 토글 로직
     $("#categorybtn").click(() => {
         $('.category1').toggleClass('categoryshow')   
@@ -57,7 +59,7 @@
     $("#presentLocBtn").click((event) => {
         showSpinner();
         $(event.target).attr("disabled", true);
-
+       
     });
 
     // 검색하면 검색위치로 setCenter & 키워드 사용 근처 콘돔판매점 검색해 json 리턴
@@ -89,20 +91,18 @@
     });
 
     //// 함수들 ====================================================================================
-    const hideSpinner = () => {
+
+   const hideSpinner = () => {
         $(".lds-ring").attr("style", "display: none;");
     }
-
-    const showSpinner = () => {
+     const showSpinner = () => {
         $(".lds-ring").removeAttr("style");
     }
-
-    const searchPresentLoc = () => {
+     const searchPresentLoc = () => {
         navigator.geolocation.getCurrentPosition(({ coords }) => {
             dismissMarkers();
             let center = new naver.maps.LatLng(coords.latitude, coords.longitude );
-
-            // 현재위치 좌표값 => 주소로 변환
+             // 현재위치 좌표값 => 주소로 변환
             naver.maps.Service.reverseGeocode({
                 location: center, coordType: naver.maps.Service.CoordType.LatLng
             },(status, {result}) => {
@@ -269,7 +269,7 @@
                             <li>${condom.name}</li>
                             <li>${condom.price} 원</li>
                             <li>${ct[condom.conType]}</li>
-                            <li><span class="review--point">★★★★★</span> 4.9</li>
+                            <li><span class="review--point">${"★".repeat(condom.score || 1)}</span> ${condom.score} </li>
                         </ul>
                     </div>
                 </div>`;

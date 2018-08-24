@@ -40,7 +40,7 @@ class HomeController < ApplicationController
     
     @condoms = Condom.all.order('score DESC')
     @row = @condoms.find_by_id(params[:id])
-    @rank = @condoms.find_index(@row) + 1    
+    @rank = @condoms.find_index(@row) + 1  
 
   end
 
@@ -57,9 +57,14 @@ class HomeController < ApplicationController
       sum += comment.score
     end
 
-    avg = sum/@comments.length
-    @condom.score = avg.round
-    @condom.save  
+    avg = sum * 1.0 / @comments.length
+    @condom.score = avg
+    @condom.save
+    respond_to do |format|
+      format.js {
+        render "rating.js.erb"
+      }
+    end
   end
   
 
