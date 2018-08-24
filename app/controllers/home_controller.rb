@@ -59,7 +59,7 @@ class HomeController < ApplicationController
     end
 
     avg = sum * 1.0 / @comments.length
-    @condom.score = avg
+    @condom.score = avg.round(1)
     @condom.save
     respond_to do |format|
       format.js {

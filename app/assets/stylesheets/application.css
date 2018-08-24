@@ -228,13 +228,7 @@ html, body {
     display:inline-block;
 }
 
-.notify-badge{
-    position: absolute;
-    left:5px;
-    top:15px;
-    padding:5px 10px;
 
-}
 .borderr {
     position: aboslute;
     border-top:1px solid grey;
