@@ -59,7 +59,7 @@
     $("#presentLocBtn").click((event) => {
         showSpinner();
         $(event.target).attr("disabled", true);
-       
+        searchPresentLoc();
     });
 
     // 검색하면 검색위치로 setCenter & 키워드 사용 근처 콘돔판매점 검색해 json 리턴
@@ -263,7 +263,7 @@
         const ct = {normal: "일반형", slim: "초박형", dot: "돌기형",drug: "도포형"}
 
         return `<div class="d-flex box mb-3">
-                    <div class="box-img border rounded ml-1"><img height="120" width="120" src="/assets${condom.image}" /></div>
+                    <div class="box-img border rounded ml-1"><img height="120" width="120" src="${condom.image}" /></div>
                     <div class="d-flex justify-content-center align-items-center">
                         <ul style="list-style: none;">
                             <li>${condom.name}</li>
