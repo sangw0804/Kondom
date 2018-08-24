@@ -18,6 +18,9 @@
 
 /* index.html */
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+.nanum {
+    font-family: 'Nanum Gothic', sans-serif;
+}
 
 #map {
     height: 80%;
@@ -116,10 +119,11 @@ html, body {
     background-color: white;
 } */
 
-/* #searchBox {
-    position: fixed;
-    z-index: 10;
-} */
+.center {
+    margin-left: auto;
+    display: inline;
+    
+}
 
 #modal {
     transition: opacity .3s ease-out;
