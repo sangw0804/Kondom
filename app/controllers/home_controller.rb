@@ -8,7 +8,8 @@ class HomeController < ApplicationController
 
   def index
     @condoms = Condom.all.order('score DESC')
-    
+     
+
   end
 
   def search_around
