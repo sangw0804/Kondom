@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Gothic+A1|Nanum+Gothic" rel="stylesheet">
+
 <div class="category1">
     <nav class="navbar navbar-light bg-light d-flex flex-column justify-content-center align-items-center">
       <div>
@@ -29,7 +31,7 @@
           <%= link_to image_tag(condom.image, style:"height: 70%;", class:"card-img-top"), "/hot/#{condom.id}" %>
           <div class="card-body" style="padding: 0px" >
             <p class="card-text text-center text-font" style="margin-bottom : 0px; font-size: 0.8rem"><%= condom.name %></p>
-            <p class="card-text text-center text-font" style="color: orange; font-size: 1rem"> <%= '★' * (condom.score || 4) %>            
+            <p class="card-text text-center text-font" style="color: orange; font-size: 1rem"> <%= '★' * (condom.score || 1) %>            
           </div>
         </div>
       <% end %>
