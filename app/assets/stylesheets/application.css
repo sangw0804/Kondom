@@ -22,6 +22,10 @@
     font-family: 'Nanum Gothic', sans-serif;
 }
 
+.gothic {
+    font-family: 'Gothic A1', sans-serif;
+}
+
 
 #map {
     height: 80%;
@@ -221,7 +225,6 @@ html, body {
 
   .item {
     position:relative;
-
     display:inline-block;
 }
 
