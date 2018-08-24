@@ -22,6 +22,10 @@
     font-family: 'Nanum Gothic', sans-serif;
 }
 
+.gothic {
+    font-family: 'Gothic A1', sans-serif;
+}
+
 
 #map {
     height: 80%;
@@ -219,3 +223,18 @@ html, body {
     background-color: #555; /* Add a dark-grey background on hover */
   }
 
+<<<<<<< HEAD
+  .item {
+    position:relative;
+    display:inline-block;
+}
+
+.notify-badge{
+    position: absolute;
+    left:5px;
+    top:15px;
+    padding:5px 10px;
+
+}
+=======
+>>>>>>> 2b7b6a8ec58ef99839ce32fdb61ce1fc327dda5e
