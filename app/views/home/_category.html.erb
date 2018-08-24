@@ -27,17 +27,17 @@
       </div>
       <% index = 1 %>
       <% @condoms.each do |condom| %>
+        <%ct = {"normal" => "일반형", "slim" => "초박형", "dot" => "돌기형", "drug" => "도포형"} %>
         
-        <div class="col-6 card-white nanum" style="width: 18rem;">
+        <div class="col-6 card-white nanum" style="width: 18rem; ">
           <%= link_to image_tag(condom.image, style:"width:100%;  height: 70%;", class:"card-img-top"), "/hot/#{condom.id}" %>
           <div class="row">
           <div class="card-body text-left col-9" style="padding-left: 10%; padding-right:0; padding-top:0; padding-bott margin:0px" >
-              <span class="card-text  text-font" style="margin-bottom : 0px; font-size: 0.8rem; font-weight:bold"><%= truncate(condom.name, length: 10) %></span>
-              <br><span class="card-text  text-font" style="font-size: 0.7rem;"> (초박형) <i class="fas fa-pen-square"> <%=(condom.comments.count)%> </i>  </span>
-           
+              <span class="card-text  text-font" style="margin-bottom : 0px; font-size: 0.8rem; font-weight:bold"><span class="badge badge-pill badge-secondary text-white notify-badge"><%=index%></span> <%= truncate(condom.name, length: 8) %></span>
+              <br><span class="card-text  text-font" style="font-size: 0.7rem;"> (<%=ct[condom.conType] %>) <i class="fas fa-pen-square"> <%=(condom.comments.count)%> </i>  </span>
           </div>
           <div class = "col-3"style="padding: 0px; margin:0px">
-          <p style="font-size: 1.6rem; color:red"> <%=condom.score %> </p>
+          <p style="font-size: 1.4rem; color:red"> <%=condom.score %> </p>
           </div>
           </div>
         </div>
