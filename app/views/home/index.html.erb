@@ -12,8 +12,8 @@
                 <div class="col-6" style="padding:0">
                 </div>
                 <div class="col-6" style="padding:0">
-                <p class="text-left" style="margin-bottom: 2px"><span class="badge badge-primary">time</span> <span class="time"></span></p>
-                <p class="text-left"><span class="tel"></span></p>
+                <p class="text-left" style="margin-bottom: 2px; font-size:0.8rem; font-weight:bold"><span class="badge badge-primary">time</span> <span class="time"></span></p>
+                <p class="text-left" style="font-size:0.8rem; font-weight:bold"><span class="tel"></span></p>
                 </div>
                 </div>
                 <div id="container">
@@ -298,11 +298,14 @@
 
         return `<div class="d-flex box mb-3 nanum">
                     <div class="box-img ml-1">${map[condom.id - 1]}</div>
-                    <div class="d-flex flex-column justify-content-center" style="margin-left: 30px;">
-                        <p class="h6" style="width: 150px;">${condom.name}</p>
-                        <p class="h6">${condom.price} 원</p>
-                        <p class="h6">${ct[condom.conType]}</p>
-                        <p class="h6"><span class="review--point">${"★".repeat(condom.score || 1)}</span> ${condom.score} </p>
+                    <div class="d-flex flex-column justify-content-center" style="margin-left: 1rem;">
+                        
+                        <p style="font-size: 0.8rem; font-weight: bold; margin:0">${condom.name}</p><br>
+                        <div style="width:7rem">
+                        <p style="font-size: 0.7rem; font-weight: bold; margin:0">${condom.price} 원</p>
+                        <p style="font-size: 0.7rem; font-weight: bold; margin:0">${ct[condom.conType]}</p>
+                        <p style="font-size: 0.9rem; font-weight: bold; margin:0; display:inline"><span style="color:gold; float:left;">${"★".repeat(condom.score || 1)}</span><span style="float:right"> (${condom.score || 1.8})</span> </p>
+                        </div>
                     </div>
                 </div>`;
     }
