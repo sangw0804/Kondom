@@ -105,9 +105,11 @@
         $(".lds-ring").removeAttr("style");
     }
      const searchPresentLoc = () => {
+	if(navigator && navigator.geolocation) {
+
         navigator.geolocation.getCurrentPosition(({ coords }) => {
             dismissMarkers();
-            let center = new naver.maps.LatLng(coords.latitude, coords.longitude );
+		let center = new naver.maps.LatLng(coords.latitude, coords.longitude );
              // 현재위치 좌표값 => 주소로 변환
             naver.maps.Service.reverseGeocode({
                 location: center, coordType: naver.maps.Service.CoordType.LatLng
@@ -122,6 +124,10 @@
                 });
             });
         });
+	} else {
+		alert("현재위치 검색 불가!!");
+		hideSpinner();
+	}
     }
 
     const searchingAround = (searchQuery) => {
