@@ -223,7 +223,6 @@ html, body {
     background-color: #555; /* Add a dark-grey background on hover */
   }
 
-<<<<<<< HEAD
   .item {
     position:relative;
     display:inline-block;
@@ -236,5 +235,10 @@ html, body {
     padding:5px 10px;
 
 }
-=======
->>>>>>> 2b7b6a8ec58ef99839ce32fdb61ce1fc327dda5e
+.borderr {
+    position: aboslute;
+    border-top:1px solid grey;
+    border-width: 50%;
+
+}
+
