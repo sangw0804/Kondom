@@ -261,9 +261,32 @@
     // 이것은 리액트가 아니다.
     const getHtmlList = (condom) => {
         const ct = {normal: "일반형", slim: "초박형", dot: "돌기형",drug: "도포형"}
+        const map = [
+            '<%= image_tag('condoms/okamoto_aloe_003.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/durex_lovebox.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/durex_normal.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/durex_slim.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/durex_dot.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/durex_pleasureme.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/donga_manskinslim.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/playboy_slim.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/ansel_skinelite.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/duo_slim.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/duo_normal.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/duo_dot.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/bs_perfect.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/bs_longpleasure.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/bs_air.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/bs_amazingdot.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/bs_slimsuit.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/playboy_dot.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/playboy_slim.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/sagami_original.jpg', style: 'width:100%; height:100%;') %>',
+            '<%= image_tag('condoms/sagami_original_002.jpg', style: 'width:100%; height:100%;') %>'
+        ];
 
         return `<div class="d-flex box mb-3">
-                    <div class="box-img border rounded ml-1"><img height="120" width="120" src="${condom.image}" /></div>
+                    <div class="box-img border rounded ml-1">${map[condom.id-1]}</div>
                     <div class="d-flex justify-content-center align-items-center">
                         <ul style="list-style: none;">
                             <li>${condom.name}</li>
