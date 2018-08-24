@@ -59,7 +59,7 @@
     $("#presentLocBtn").click((event) => {
         showSpinner();
         $(event.target).attr("disabled", true);
-       
+        searchPresentLoc();
     });
 
     // 검색하면 검색위치로 setCenter & 키워드 사용 근처 콘돔판매점 검색해 json 리턴
